@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 
 // import routes
 const authRoute = require("./routes/auth");
+const toDosRoute = require("./routes/todos");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/auth", authRoute);
+app.use("/api/todos", toDosRoute);
 
 mongoose
   .connect(process.env.MONGO_URI)
