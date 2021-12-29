@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 // import routes
 const authRoute = require("./routes/auth");
@@ -19,6 +20,12 @@ app.get("/api", (req, res) => {
 
 app.use("/api/auth", authRoute);
 app.use("/api/todos", toDosRoute);
+
+app.use(express.static(path.resolve(__dirname, "./client/build")));
+
+app.get("*", (req, res) => {
+  req.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 mongoose
   .connect(process.env.MONGO_URI)
